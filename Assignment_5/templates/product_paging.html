@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+
+  {% for Chuan in chuan.items %}
+       {% if loop.index == 1 %}{% set counter = ( counter | default(1) ) %}{% endif %}
+        {% if counter == 1 %}<div class="row">{% endif %}
+        <div class="col-md-4">
+          <div class="thumbnail">
+              <p>Col#:{{ loop.index }}<br>Dish Name: {{ Chuan['dish_name'] }}<br>Chinese Name: {{ Chuan['Chinese_Name'] }}<br>Pronunciation: {{ Chuan['Pronunciation'] }}</p>
+             
+          </div>
+        </div> 
+       {% if counter == 3 %}</div><!--end row-->{%  set counter = ( counter | default(1) ) %}{% else %}{% set counter = ( counter | default(0) ) + 1 %}{% endif %}
+  {% endfor %}
+  <div class="container" style="float: left;">
+  {% for page in chuan.iter_pages() %}  
+    {% if page %}
+        <a href="{{url_for('album')}}/{{ page }}">{{ page }}</a>
+    {% else %}
+        ...
+    {% endif %}
+  {% endfor %}  
+  </div>
+{% endblock %}
